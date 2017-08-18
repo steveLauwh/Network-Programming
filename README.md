@@ -22,5 +22,5 @@
 ## 参考资料
 
 * Unix 网络编程「卷2：进程间通信」
-* [oracle 编程接口指南-进程间通信](http://docs.oracle.com/cd/E38902_01/html/E38880/svipc-38596.html#scrolltoc)
+* [Oracle 编程接口指南-进程间通信](http://docs.oracle.com/cd/E38902_01/html/E38880/svipc-38596.html#scrolltoc)
 
