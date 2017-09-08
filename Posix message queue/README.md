@@ -43,7 +43,7 @@ struct mq_attr {
 mqd_t mq_getattr(mqd_t mqdes, struct mq_attr *attr);
 
 /* 设置当前消息队列的属性 */
-mqd_t mq_setattr(mqd_t mqdes, const struct mq_attr *newattr, struct mq_attr *oldattr);
+mqd_t mq_setattr(mqd_t mqdes, struct mq_attr *newattr, struct mq_attr *oldattr);
 ```
 
 mq_setattr 可以设置的属性只有 mq_flags，用来设置或清除消息队列的非阻塞标志。每个队列的最大消息数 mq_maxmsg 和每个消息的字节数 mq_msgsize 只能在创建队列(mq_open)时设置。队列中的当前消息数目 mq_curmsgs 只能获取。
