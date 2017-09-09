@@ -71,6 +71,7 @@ int mq_notify(mqd_t mqdes, const struct sigevent *notification);
 * mq_receive 总是返回所指定队列中最高优先级的最早消息
 * mq_receive 中 len 参数不能小于写入队列中消息的最大大小，即一定要大于等于该队列的 mq_attr 结构中 mq_msgsize 的大小
 * mq_send 中 prio 参数是待发送消息的优先级，其值必须小于 MQ_PRIO_MAX
+* mq_notify 允许我们注册一个信号或线程，它们在有一个消息被放置到某个空队列上时发送信号或激活线程。
 
 > 消息队列的限制
 
