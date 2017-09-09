@@ -46,5 +46,35 @@ mqd_t mq_getattr(mqd_t mqdes, struct mq_attr *attr);
 mqd_t mq_setattr(mqd_t mqdes, struct mq_attr *newattr, struct mq_attr *oldattr);
 ```
 
-mq_setattr 可以设置的属性只有 mq_flags，用来设置或清除消息队列的非阻塞标志。每个队列的最大消息数 mq_maxmsg 和每个消息的字节数 mq_msgsize 只能在创建队列(mq_open)时设置。队列中的当前消息数目 mq_curmsgs 只能获取。
+mq_setattr 可以设置的属性只有 mq_flags，用来设置或清除消息队列的非阻塞标志。
 
+每个队列的最大消息数 mq_maxmsg 和每个消息的字节数 mq_msgsize 只能在创建队列(mq_open)时设置。
+
+队列中的当前消息数目 mq_curmsgs 只能获取。
+
+> 消息队列的使用
+
+```c
+#include <mqueue.h>
+
+/* 向一个消息队列中写入一条消息 */
+int mq_send(mqd_t mqdes, const char *ptr, size_t len, unsigned int prio);
+
+/* 从一个消息队列中取出一条消息 */
+ssize_t mq_receive(mqd_t mqdes, const char *ptr, size_t len, unsigned int prio);
+
+/* 异步事件通知，以告知何时有一个消息放置到某个空消息队列中 */
+int mq_notify(mqd_t mqdes, const struct sigevent *notification);
+```
+
+**注意点**
+* mq_receive 总是返回所指定队列中最高优先级的最早消息
+* mq_receive 中 len 参数不能小于写入队列中消息的最大大小，即一定要大于等于该队列的 mq_attr 结构中 mq_msgsize 的大小
+* mq_send 中 prio 参数是待发送消息的优先级，其值必须小于 MQ_PRIO_MAX
+
+> 消息队列的限制
+
+* mq_maxmsg：队列中的最大消息数
+* mq_msgsize：给定消息的最大字节数
+* MQ_OPEN_MAX：一个进程能够同时打开消息队列的最大数目(Posix 要求至少为8)
+* MQ_PRIO_MAX：消息的最大优先级
