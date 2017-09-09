@@ -40,10 +40,10 @@ struct mq_attr {
 };
 
 /* 获取当前消息队列的属性 */
-mqd_t mq_getattr(mqd_t mqdes, struct mq_attr *attr);
+int mq_getattr(mqd_t mqdes, struct mq_attr *attr);
 
 /* 设置当前消息队列的属性 */
-mqd_t mq_setattr(mqd_t mqdes, struct mq_attr *newattr, struct mq_attr *oldattr);
+int mq_setattr(mqd_t mqdes, struct mq_attr *newattr, struct mq_attr *oldattr);
 ```
 
 mq_setattr 可以设置的属性只有 mq_flags，用来设置或清除消息队列的非阻塞标志。
@@ -58,10 +58,10 @@ mq_setattr 可以设置的属性只有 mq_flags，用来设置或清除消息队
 #include <mqueue.h>
 
 /* 向一个消息队列中写入一条消息 */
-int mq_send(mqd_t mqdes, const char *ptr, size_t len, unsigned int prio);
+int mq_send(mqd_t mqdes, const char *msg_ptr, size_t msg_len, unsigned msg_prio);
 
 /* 从一个消息队列中取出一条消息 */
-ssize_t mq_receive(mqd_t mqdes, const char *ptr, size_t len, unsigned int prio);
+ssize_t mq_receive(mqd_t mqdes, char *msg_ptr, size_t msg_len, unsigned *msg_prio);
 
 /* 异步事件通知，以告知何时有一个消息放置到某个空消息队列中 */
 int mq_notify(mqd_t mqdes, const struct sigevent *notification);
