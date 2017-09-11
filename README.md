@@ -3,10 +3,12 @@
 ## 进程间通信
 
 * 消息传递
-  + 管道
-  + FIFO
+  + [管道](https://github.com/steveLauwh/Network-Programming/tree/master/pipe%20And%20FIFO)
+  + [FIFO](https://github.com/steveLauwh/Network-Programming/tree/master/pipe%20And%20FIFO)
   + 消息队列
-  
+    + [Posix 消息队列](https://github.com/steveLauwh/Network-Programming/tree/master/Posix%20message%20queue)
+    + [System V 消息队列](https://github.com/steveLauwh/Network-Programming/tree/master/System%20V%20message%20queue)
+    
 * 同步
   + 互斥量
   + 条件变量
