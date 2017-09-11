@@ -10,8 +10,8 @@
     + [System V 消息队列](https://github.com/steveLauwh/Network-Programming/tree/master/System%20V%20message%20queue)
     
 * 同步
-  + 互斥量
-  + 条件变量
+  + [互斥锁](https://github.com/steveLauwh/Network-Programming/tree/master/Mutex%20And%20Condition%20Variable)
+  + [条件变量](https://github.com/steveLauwh/Network-Programming/tree/master/Mutex%20And%20Condition%20Variable)
   + 读写锁
   + 文件和记录锁
   + 信号量
