@@ -1,4 +1,4 @@
-## System V message queue
+## System V 之消息队列
 
 ### System V 消息队列与 Posix 消息队列的区别
 
