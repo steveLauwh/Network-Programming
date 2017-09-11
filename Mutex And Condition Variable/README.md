@@ -26,4 +26,10 @@ int pthread_mutex_trylock(pthread_mutex_t *mptr);
 int pthread_mutex_unlock(pthread_mutex_t *mptr);
 ```
 
+当期待的条目尚未准备好，需要一次次地循环，每次给互斥锁解锁又上锁。这称为轮询，是一种对 CPU 时间的浪费。
+
+### 条件变量
+
+互斥锁用于上锁，条件变量则用于等待。
+
 ### 有了互斥锁，为什么需要条件变量
