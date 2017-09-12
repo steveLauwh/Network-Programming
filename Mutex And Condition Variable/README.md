@@ -101,3 +101,15 @@ pthread_cond_signal
 条件变量也是一种互斥的资源，需要互斥锁保护条件变量，防止竞争。
 
 pthread_cond_wait(&cond, &mutex); // 相当于 unlock(MUTEX), wait(COND), lock(MUTEX) 三个操作
+
+### pthread_cond_wait() 前要加一个 while 循环来判断条件是否为假的原因？
+
+在多核处理器下，pthread_cond_signal() 可能会激活多于一个线程（阻塞在条件变量上的线程）。 
+
+当一个线程调用 pthread_cond_signal() 后，多个调用 pthread_cond_wait() 或 pthread_cond_timedwait() 的线程返回。
+这种效应成为”虚假唤醒”(spurious wakeup) 。
+
+pthread_cond_wait() 中的 while 循环不仅仅在等待条件变量前检查条件变量，实际上在等待条件变量后也检查条件变量。
+
+这样对 condition 进行多做一次判断，即可避免“虚假唤醒”。
+
