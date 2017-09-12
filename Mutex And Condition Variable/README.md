@@ -63,10 +63,13 @@ int pthread_cond_timedwait(pthread_cond_t *cptr, pthread_mutex_t *mptr, const st
 **pthread_cond_signal 写在互斥锁操作之间，还是之后？**
 
 放在互斥锁操作之间：
+
+```c
 pthread_mutex_lock
     xxxxxxx
 pthread_cond_signal
 pthread_mutex_unlock
+```
 
 缺点：
 
@@ -76,10 +79,13 @@ pthread_mutex_unlock
 而不用返回到用户空间，不会有性能的损耗。所以在 Linux 中推荐使用这种模式。
 
 放在互斥锁操作之后：
+
+```c
 pthread_mutex_lock
     xxxxxxx
 pthread_mutex_unlock
 pthread_cond_signal
+```
 
 优点：不会出现之前说的那个潜在的性能损耗，因为在 signal 之前就已经释放锁了
 
