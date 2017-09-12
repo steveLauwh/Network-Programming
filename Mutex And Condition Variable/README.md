@@ -60,4 +60,38 @@ int pthread_cond_broadcast(pthread_cond_t *cptr);
 int pthread_cond_timedwait(pthread_cond_t *cptr, pthread_mutex_t *mptr, const struct timespec *abstime);
 ```
 
+**pthread_cond_signal 写在互斥锁操作之间，还是之后？**
+
+放在互斥锁操作之间：
+pthread_mutex_lock
+    xxxxxxx
+pthread_cond_signal
+pthread_mutex_unlock
+
+缺点：
+
+在某下线程的实现中，会造成等待线程从内核中唤醒（由于cond_signal)然后又回到内核空间（因为cond_wait返回后会有原子加锁的行为），
+所以一来一回会有性能的问题。但是在 Linux Threads 或者 NPTL 里面，就不会有这个问题，因为在Linux 线程中，有两个队列，
+分别是 cond_wait 队列和 mutex_lock 队列， cond_signal 只是让线程从 cond_wait 队列移到 mutex_lock 队列，
+而不用返回到用户空间，不会有性能的损耗。所以在 Linux 中推荐使用这种模式。
+
+放在互斥锁操作之后：
+pthread_mutex_lock
+    xxxxxxx
+pthread_mutex_unlock
+pthread_cond_signal
+
+优点：不会出现之前说的那个潜在的性能损耗，因为在 signal 之前就已经释放锁了
+
+缺点：如果 unlock 和 signal 之前，有个低优先级的线程正在 mutex 上等待的话，
+那么这个低优先级的线程就会抢占高优先级的线程（cond_wait的线程)，而这在上面的放中间的模式下是不会出现的。
+
 ### 有了互斥锁，为什么需要条件变量
+
+互斥锁一个明显的缺点是只有两种状态：锁定和非锁定。互斥锁不能跨线程，条件变量可以限定两个线程之间进行可靠地同步。
+
+条件变量通过允许线程阻塞和等待另一个线程发送信号的方法弥补了互斥锁的不足，它常和互斥锁一起使用。
+
+条件变量也是一种互斥的资源，需要互斥锁保护条件变量，防止竞争。
+
+pthread_cond_wait(&cond, &mutex); // 相当于 unlock(MUTEX), wait(COND), lock(MUTEX) 三个操作
