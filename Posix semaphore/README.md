@@ -32,7 +32,7 @@
 
 ### Posix 信号量 API
 
-Posix 有名信号量
+**Posix 有名信号量**
 
 > 创建一个有名信号量或打开一个已存在的有名信号量
 
@@ -93,3 +93,23 @@ int sem_getvalue(sem_t *sem,  int *sval);  //成功返回0，失败返回-1
 ```
 
 该函数返回当前信号量的值，通过sval输出参数返回，如果当前信号量已经上锁（即同步对象不可用），那么返回值为0，或为负数，其绝对值就是等待该信号量解锁的线程数。
+
+**Posix 无名信号量的创建和销毁**
+
+```c
+#include <semaphore.h>  
+  
+int sem_init(sem_t *sem, int pshared, unsigned int value);  //若出错则返回-1  
+
+int sem_destroy(sem_t *sem);  //成功返回0，失败返回-1  
+```
+
+sem_init() 用于无名信号量的初始化。无名信号量在初始化前一定要在内存中分配一个 sem_t 信号量类型的对象，这就是无名信号量又称为基于内存的信号量的原因。
+
+### 信号量的经典问题——生产者和消费者
+
+### Posix 信号量的三种实现
+
+* 使用 FIFO 实现
+* 使用内存映射 I/O 实现
+* 使用 System V 信号量实现
