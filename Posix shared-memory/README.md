@@ -12,9 +12,8 @@
 
 mmap 函数把一个文件或一个 Posix 共享内存区对象映射到调用进程的地址空间。
 
-进程在用户空间调用库函数 mmap。
-
 ```c
+// 进程在用户空间调用库函数 mmap
 void *mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
 ```
 
