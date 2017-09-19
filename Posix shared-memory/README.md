@@ -8,9 +8,15 @@
 
 共享内存并未提供同步机制，需要借助同步机制，如信号量，来同步对共享内存的访问。
 
+### 内存映射文件
+
+集中于 mmap 函数以及普通文件的内存映射，是对有亲缘关系的进程间共享内存空间的一种方法。
+
 > mmap
 
 mmap 函数把一个文件或一个 Posix 共享内存区对象映射到调用进程的地址空间。
+
+open 函数打开，由 mmap 函数把得到的描述符映射到当前进程地址空间中的一个文件。
 
 ```c
 // 进程在用户空间调用库函数 mmap
@@ -31,8 +37,39 @@ int munmap(void *addr, size_t len);
 int msync(void *addr, size_t len, int flags);
 ```
 
-
 ### Posix 共享内存
+
+Posix 共享内存使用方法有以下两个步骤：
+* 通过 shm_open 创建或打开一个 Posix 共享内存对象
+* 然后调用 mmap 将它映射到当前进程的地址空间
+
+> Posix 共享内存的创建（打开）和删除
+
+```c
+#include <sys/mman.h>  
+
+// 成功返回非负的描述符，失败返回-1  
+int shm_open(const char *name, int oflag, mode_t mode);  
+                              
+int shm_unlink(const char *name);  //成功返回0，失败返回-1                              
+```
+
+> 修改普通文件或共享内存区对象的大小
+
+```c
+#include <unistd.h>
+
+int ftruncate(int fd, off_t length);
+```
+
+> 当打开一个已存在的共享内存区对象时，获取有关对象的信息
+
+```c
+#include <sys/types.h>
+#include <sys/stat.h>
+
+int fstat(int fd, struct stat *buf);
+```
 
 ### 参考
 
