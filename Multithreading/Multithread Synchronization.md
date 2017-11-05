@@ -37,5 +37,6 @@
 ## 参考
 
 * [Linux多线程与同步](http://www.cnblogs.com/vamei/archive/2012/10/09/2715393.html)
+* [使用可重入函数进行更安全的信号处理](https://www.ibm.com/developerworks/cn/linux/l-reent.html)
 * [线程安全与可重入函数之间的区别](http://m.blog.csdn.net/WX_East/article/details/74002268)
 * [可重入性与线程安全](http://www.cnblogs.com/zhaoyl/archive/2012/10/03/2711018.html)
