@@ -26,7 +26,7 @@ unlock_the_mutex(...);
 pthread_mutex_t fastmutex = PTHREAD_MUTEX_INITIALIZER;
 
 // 动态初始化
-int  pthread_mutex_init(pthread_mutex_t  *mutex,  const  pthread_mutex‐attr_t *mutexattr);
+int  pthread_mutex_init(pthread_mutex_t  *mutex,  const  pthread_mutex_attr_t *mutexattr);
 ```
 
 **互斥锁销毁**
