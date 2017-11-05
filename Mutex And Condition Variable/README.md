@@ -1,10 +1,10 @@
-## 互斥锁和条件变量
+# 互斥锁和条件变量
 
 互斥锁和条件变量是同步的基本组成部分。
 
 互斥锁和条件变量出自 Posix.1 线程标准。
 
-### 互斥锁：上锁与解锁
+## 互斥锁：上锁与解锁
 
 互斥锁是指相互排斥，最基本的同步形式；用于保护临界区，以保证任何时刻只有一个线程或进程在执行其中的代码。
 
@@ -17,24 +17,67 @@ lock_the_mutex(...);
 unlock_the_mutex(...);
 ```
 
+**互斥锁的创建**
+
+```c
+#include <pthread.h>
+
+// 静态初始化
+pthread_mutex_t fastmutex = PTHREAD_MUTEX_INITIALIZER;
+
+// 动态初始化
+int  pthread_mutex_init(pthread_mutex_t  *mutex,  const  pthread_mutex‐attr_t *mutexattr);
+```
+
+**互斥锁销毁**
+
+```c
+#include <pthread.h>
+
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+```
+
 **互斥锁上锁和解锁：**
 ```c
 #include <pthread.h>
 
 int pthread_mutex_lock(pthread_mutex_t *mptr);
+
+// 锁已经被占有时返回 EBUSY，而不是挂起等待
 int pthread_mutex_trylock(pthread_mutex_t *mptr);
+
 int pthread_mutex_unlock(pthread_mutex_t *mptr);
 ```
 
 当期待的条目尚未准备好，需要一次次地循环，每次给互斥锁解锁又上锁。这称为轮询，是一种对 CPU 时间的浪费。
 
-### 条件变量
+## 条件变量
 
 互斥锁用于上锁，条件变量则用于等待。
 
 条件变量是类型为 pthread_cond_t 的变量。
 
-**条件变量：等待与信号发送：**
+**条件变量的创建**
+
+```c
+#include <pthread.h>
+
+// 静态
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
+// 动态
+int pthread_cond_init(pthread_cond_t *cond, pthread_condattr_t *cond_attr);
+```
+
+**条件变量的销毁**
+
+```c
+#include <pthread.h>
+
+int pthread_cond_destroy(pthread_cond_t *cond);
+```
+
+**条件变量：等待与信号发送**
 
 ```c
 #include <pthread.h>
@@ -92,7 +135,7 @@ pthread_cond_signal
 缺点：如果 unlock 和 signal 之前，有个低优先级的线程正在 mutex 上等待的话，
 那么这个低优先级的线程就会抢占高优先级的线程（cond_wait的线程)，而这在上面的放中间的模式下是不会出现的。
 
-### 有了互斥锁，为什么需要条件变量
+### 有了互斥锁，为什么需要条件变量？
 
 互斥锁一个明显的缺点是只有两种状态：锁定和非锁定。互斥锁不能跨线程，条件变量可以限定两个线程之间进行可靠地同步。
 
