@@ -36,4 +36,5 @@
 * Unix 网络编程「卷2：进程间通信」
 * [Oracle 编程接口指南-进程间通信](http://docs.oracle.com/cd/E38902_01/html/E38880/svipc-38596.html#scrolltoc)
 * [高性能网络编程](http://blog.csdn.net/column/details/high-perf-network.html)
+* [即时通讯开发者社区](http://www.52im.net/thread-180-1-1.html)
 
