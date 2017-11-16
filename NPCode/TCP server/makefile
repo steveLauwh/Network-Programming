@@ -1,4 +1,4 @@
-all:tcpserver tcpclient
+all: tcpserver tcpclient
 
 tcpserver: tcpserver.o
 	gcc -g -o tcpserver tcpserver.o
@@ -12,5 +12,5 @@ tcpserver.o: tcpserver.c
 tcpclient.o: tcpclient.c
 	gcc -g -c tcpclient.c
 
-clean:all
+clean: all
 	rm all
