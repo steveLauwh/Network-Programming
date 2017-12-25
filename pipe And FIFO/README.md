@@ -2,6 +2,8 @@
 
 管道是无名管道，由 pipe 函数创建。
 
+![](https://github.com/steveLauwh/Network-Programming/raw/master/image/SigProcPipe.PNG)
+
 > 函数原型：
 
 ```c
@@ -24,7 +26,13 @@ int pipe(int pipefd[2]);
 2. 创建子进程，由父进程通过 fork 创建
 3. 在父进程进行写操作，子进程进行读操作。
 
+![](https://github.com/steveLauwh/Network-Programming/raw/master/image/SigProcPipeFork.PNG)
+
+![](https://github.com/steveLauwh/Network-Programming/raw/master/image/TwoProcPipe.PNG)
+
 如果实现双向数据流，需要使用两个管道操作，所以全双工管道的真正实现是由两个半双工管道构成的。
+
+![](https://github.com/steveLauwh/Network-Programming/raw/master/image/MultiProcPipe.PNG)
 
 ## 消息传递之 FIFO
 
