@@ -1,6 +1,6 @@
 #include "client.h"
 #include <stdio.h>
-#include <stdlib.h>   
+#include <stdlib.h>    
 #include <unistd.h>   // read, write
 
 #define MAXLINE 4096
