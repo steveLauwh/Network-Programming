@@ -84,4 +84,9 @@ int unlink(const char *pathname);
 
 FIFO 的名字只有通过调用 unlink 才从文件系统中删除。
 
+## 管道 pipe 与 FIFO 区别
+
+* 创建并打开一个管道只需调用 pipe。创建并打开一个 FIFO 则需在调用 mkfifo 后再调用 open
+* 管道在所有进程最终都关闭它之后自动消失。FIFO 的名字则只有通过调用 unlink 才从文件系统中删除
+* pipe 适用于有亲缘关系的进程间通信，FIFO 可以无亲缘关系的进程间通信
 
