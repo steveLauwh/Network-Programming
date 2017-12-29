@@ -7,6 +7,7 @@
 		exit(EXIT_FAILURE); \
 	} while(0)
 
+// 客户端侧
 int main(int argc, char *argv[])
 {
 	int readfd, writefd;
